@@ -11,7 +11,7 @@
   - Authentication
 
 ## 起動方法
-
+1. git clone https://github.com/akito-10/chat-app-react.git
 1. npm install
 1. npm start
 
