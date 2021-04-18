@@ -42,7 +42,11 @@ const Chat: React.FC<MessageListType> = ({
       <div className={classes.chat}>
         <div className={classes.info}>
           <p style={{ marginRight: 10 }}>{username}</p>
-          <p>{new Date(timestamp?.toDate()).toLocaleString()}</p>
+          <p>
+            {timestamp
+              ? new Date(timestamp.toDate()).toLocaleString()
+              : "取得中..."}
+          </p>
         </div>
         <div className={classes.text} style={{ background: bgColor }}>
           {text}

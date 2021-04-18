@@ -20,7 +20,7 @@ const Chats: React.FC<ChatsProps> = (props) => {
   const classes = useStyles();
 
   return (
-    <List className={classes.chats}>
+    <List className={classes.chats} id={"scroll-area"}>
       {props.messageList.map((message) => (
         <Chat
           messageId={message.messageId}
