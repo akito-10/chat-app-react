@@ -7,16 +7,22 @@ export const userSlice = createSlice({
     user: { uid: "", displayName: "" },
   },
   reducers: {
+    // ログイン状態をストアに保存
     login: (state, action) => {
       state.user = action.payload;
     },
+    // ユーザー情報リセット
     logout: (state) => {
       state.user = { uid: "", displayName: "" };
+    },
+    // プロフィール情報格納
+    updateUserProfile: (state, action) => {
+      state.user.displayName = action.payload.displayName;
     },
   },
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login, logout, updateUserProfile } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.user;
 
