@@ -10,18 +10,12 @@ import SendIcon from "@material-ui/icons/Send";
 import { auth, db } from "../firebase/firebase";
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
+import { MessageListType } from "../types";
+import Chats from "./Chats";
 
 import firebase from "firebase/app";
 
-type MessageListType = {
-  messageId: string;
-  userId: string;
-  text: string;
-  timestamp: any;
-  username: string;
-};
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   section: {
     position: "relative",
     height: "100vh",
@@ -79,7 +73,7 @@ const Main: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      await db
+      const unSub = db
         .collection("messages")
         .orderBy("timestamp", "asc")
         .onSnapshot((snapshot) => {
@@ -93,6 +87,7 @@ const Main: React.FC = () => {
             }))
           );
         });
+      return () => unSub();
     })();
   }, []);
 
@@ -105,7 +100,7 @@ const Main: React.FC = () => {
             <ExitToAppIcon />
           </IconButton>
         </header>
-        {/* <Chats /> */}
+        <Chats messageList={messageList} />
         <form className={classes.form} onSubmit={sendMessage}>
           <TextField
             className={classes.input}
