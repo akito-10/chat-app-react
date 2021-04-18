@@ -72,24 +72,29 @@ const Main: React.FC = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      const unSub = db
-        .collection("messages")
-        .orderBy("timestamp", "asc")
-        .onSnapshot((snapshot) => {
-          setMessageList(
-            snapshot.docs.map((doc) => ({
-              messageId: doc.id,
-              userId: doc.data().userId,
-              text: doc.data().text,
-              timestamp: doc.data().timestamp,
-              username: doc.data().username,
-            }))
-          );
-        });
-      return () => unSub();
-    })();
+    const unSub = db
+      .collection("messages")
+      .orderBy("timestamp", "asc")
+      .onSnapshot((snapshot) => {
+        setMessageList(
+          snapshot.docs.map((doc) => ({
+            messageId: doc.id,
+            userId: doc.data().userId,
+            text: doc.data().text,
+            timestamp: doc.data().timestamp,
+            username: doc.data().username,
+          }))
+        );
+      });
+    return () => unSub();
   }, []);
+
+  useEffect(() => {
+    const scrollArea = document.getElementById("scroll-area");
+    if (scrollArea) {
+      scrollArea.scrollTop = scrollArea.scrollHeight;
+    }
+  }, [messageList]);
 
   return (
     <section className={classes.section}>
